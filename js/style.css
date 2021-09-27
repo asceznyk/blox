@@ -21,33 +21,58 @@ body {
 	color: #E356A7;
 }
 
+.code::-webkit-scrollbar, .console-area::-webkit-scrollbar {
+	display:none;
+}
+
+.console-area, .code {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
 .code-area, .console-area {
 	width: calc(50% - 2px);
 	margin: auto;
-	min-height:500px;
-	display: flex;
+	height: 500px;
+	display: block;
 	border: 1px solid #bd93f9;
 	float:left;
+	overflow:hidden;
+	font-size: 12px;
 }
 
 .console-area {
 	background:#282A36;
 	color: #50FA7B;
-	overflow:hidden;
 }
 
 .code-area {
 	border-right:none;
 }
 
-.code-area textarea.code { 
+.console-area .shell {
+	padding: 8px;
+}
+
+.code-area .code {
 	background:#282A36;
 	color: #50FA7B;
 	padding:8px;
 	outline:none;
-	width:-webkit-fill-available;	
+	width:-webkit-fill-available;
 	resize:none;
 	border:none;
+	height: calc(100% - 46px);
+}
+
+.code-area .run {
+	background:#50FA7B;
+	border:none;
+	height: 27px;
+	outline: none;
+	position:relative;
+	right: 0px;
+	float: right;
 }
 
 .gap {
@@ -75,6 +100,7 @@ body {
 		display: block;
 	}
 }
+
 
 
 
