@@ -1,6 +1,9 @@
 const Identifiers = ['var', 'val', 'const', 'stmt'];
 const Types = ['number', 'bool', 'array', 'function'];
 const Statements = ['print', 'while', 'for', 'if'];
+const Operators = ['{}', '[]', '()', '<', '>', '=', '*', '+', '-', '/', ':'];
+
+//the code above might change significantly!
 
 function removeComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), "");
