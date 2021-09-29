@@ -1,3 +1,9 @@
 hello {
-	say "Hello! order number 8612 -- calling --"
+	a = 6
+	b = 3
+	c = a * b
+	say "Hello! order number " + c + " -- calling --"
 }
+
+hello()
+
