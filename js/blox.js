@@ -1,9 +1,8 @@
-const Identifiers = ['var', 'val', 'const', 'stmt'];
-const Types = ['number', 'bool', 'array', 'function'];
-const Statements = ['print', 'while', 'for', 'if'];
-const Operators = ['{}', '[]', '()', '<', '>', '=', '*', '+', '-', '/', ':'];
+const Types = ['number', 'bool', 'string'];
+const Keywords = ['say', 'while', 'for', 'if', 'cnst'];
+const Operators = ["=", "+", "-", "*", "/", "==", "<", ">"]; //let's see
 
-//the code above might change significantly!
+
 
 function removeComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), "");
@@ -15,17 +14,12 @@ function removeComments(string) {
 
 function lexer(program) {
 	program = removeComments(program);
-	//program = program.replace((/[\n]/g), " ");
-	//program = program.replace((/[\s]/g), " ");
 	let tokens = program.match((/[A-Za-z]+|[0-9.0-9]+|[\=\+\-\*\/\@\:\!\$\%\(\)\{\}\,\<\>\[\]\n]|\"(?<=\")(.*)(?=\")\"/gmi))
 	
 	return tokens;
 }
 
-function parser(tokens) {
-	//goes through the tokens
-	//returns an Abstract-Syntax-Tree (AST)
-	
+function parser(tokens) {	
 	let ast = [];
 	let block = {'name':null, 'identifier':null};
 	for (let t = 0; t < tokens.length; t++) {
@@ -39,7 +33,6 @@ function run(program) {
 	parser(tokens);
 	shell.innerHTML = '--running program--';
 }
-
 
 let shell = document.getElementById("shell");
 let runBtn = document.getElementById("run");

@@ -1,5 +1,5 @@
 hello {
-	print "Hello! order number 8612 -- calling --"
+	say "Hello! order number 8612 -- calling --"
 }
 
 sum (array) {
@@ -11,6 +11,6 @@ sum (array) {
 }
 
 hello()
-print sum([1.99,2.66,3.75])
+say sum([1.99,2.66,3.75])
 
 
