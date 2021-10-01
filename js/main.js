@@ -1,5 +1,3 @@
-const Types = ['number', 'boolean', 'string'];
-const Keywords = ['say', 'while', 'for', 'if', 'else', 'cnst'];
 const Operators = ["=", "+", "-", "*", "/", "==", "<", ">"]; 
 
 function removeComments(string) {
@@ -10,11 +8,11 @@ function removeComments(string) {
 	return string.slice(first);
 }
 
-function lexer(program) {
+/*function lexer(program) {
 	program = removeComments(program);
-	let tokens = program.match((/[A-Za-z]+|[0-9.0-9]+|[\=\+\-\*\/\@\:\!\$\%\(\)\{\}\,\<\>\[\]\n]|(["'])(?:(?=(\\?))\2.)*?\1/gmi));	
-	return tokens;
-}
+	//let tokens = program.match((/[A-Za-z]+|[0-9.0-9]+|[\=\+\-\*\/\@\:\!\$\%\(\)\{\}\,\<\>\[\]\n]|(["'])(?:(?=(\\?))\2.)*?\1/gmi));	
+	return program;
+}*/
 
 function checkStart(tokens) {	
 	if(Operators.includes(tokens[0])) {
@@ -23,25 +21,23 @@ function checkStart(tokens) {
 	return true
 }
 
-function parser(tokens, t) {	
-	let ast = [];
-	let block = {'name':null};
-
+function parser(tokens, t, ast, block) {	
 	if(!checkStart(tokens)) return
 
+	block['name'] = tokens[t]
 	if (tokens[t+1] == '{') {
-		block['name'] = tokens[t]
 		block['application'] = 'function'
-		block['body'] = parser(tokens, t+2);
+		block['body'] = parser(tokens, t+2, ast, {});
+	} else if (tokens[t+1] == '=') {
+		//block['name'] = tokens[t]
 	}
-
-	console.log(block);
+	 
+	else if (tokens[t] == "\n") {
+		return parser(tokens, t+1, ast, block);
+	} 
 }
 
 function run(program) {
-	let tokens = lexer(program);
-	console.log(tokens);
-	parser(tokens, 0);
 	shell.innerHTML = '--running program--';
 }
 

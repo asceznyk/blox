@@ -1,8 +1,9 @@
-hello {
-	a = 6
-	b = 3
-	c = a * b
-	say "Hello! order number " + c + " -- calling --"
+a = 6
+b = 3
+c = a * b
+
+hello {	
+	print "Hello! order number " + c + " -- calling --"
 }
 
 hello()
