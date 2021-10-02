@@ -9,7 +9,8 @@ var Term = function(type, x) {
 }
 
 var Bools = ['true', 'false'];
-var Defs = ['def', 'while', 'for', 'in', 'if', 'else', 'return', 'print'];
+var Definitions = ['def', 'while', 'for', 'in', 'if', 'else', 'return', 'print'];
+var Operators = ['=', '+', '-', '*', '/', '==', '++', '--', '+=', '-='];
 
 function skipSpaceComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), '');
@@ -25,7 +26,7 @@ function tokenize(program) {
 	
 	if(match = /^[A-Za-z]+/.exec(program)) {
 		token = match[0];
-		if(Defs.includes(token)) {
+		if(Definitions.includes(token)) {
 			token = new Term('definition', token);
 		} else if(Bools.includes(token)) {
 			token = new Literal(Boolean, token);
@@ -36,8 +37,13 @@ function tokenize(program) {
 		token = new Literal(String, match[0]);
 	} else if (match = /^[0-9.0-9]+/.exec(program)) {
 		token = new Literal(Number, match[0]);
-	} else if (match = /^[\=\+\-\*\/\@\:\!\$\%]/.exec(program)) {
-		token = new Term('operator', match[0]);
+	} else if (match = /^[\=\+\-\*\/]+/.exec(program)) {
+		token = match[0];
+		if(Operators.includes(token)) {
+			token = new Term('operator', token);
+		} else {
+			throw new SyntaxError('Expected one of valid operators');
+		}
 	} else {
 		token = {}
 		match = [' '];
