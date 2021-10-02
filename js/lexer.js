@@ -1,33 +1,3 @@
-/*var NumLiteral = function(x) {
-	this.type = 'NumLiteral';
-	this.value = Number(x);
-}
-
-var StrLiteral = function(x) {
-	this.type = 'StrLiteral';
-	this.value = String(x);
-}
-
-var BoolLiteral = function(x) {
-	this.type = 'BoolLiteral';
-	this.value = Boolean(x);
-}
-
-var Identifier = function(x) {
-	this.type = 'Identifier';
-	this.name = x;
-}
-
-var Definition = function(x) {
-	this.type = 'Definition';
-	this.name = x;
-}
-
-var Operator = function(x) {
-	this.type = 'Operator';
-	this.name = x;
-}*/
-
 var Literal = function(ftype, x) {
 	this.value = ftype ==  Boolean ? JSON.parse(x) : ftype(x);
 	this.type = typeof this.value;
