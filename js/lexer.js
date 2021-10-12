@@ -45,7 +45,7 @@ function tokenize(program) {
 		} else {
 			throw new SyntaxError('Expected one of valid operators');
 		}
-	} else if (match = /^[\(\)\{\}\[\]\;\:\,\.]+/.exec(program)) {
+	} else if (match = /^[\(\)\{\}\[\]\;\:\,\.]/.exec(program)) {
 		token = new Term('seperator', match[0]);
 	} else {
 		token = {}
@@ -65,7 +65,6 @@ function lexer(program) {
 		tokens.push(token);
 	}
 
-	console.log(tokens);
 	return tokens;
 }
 

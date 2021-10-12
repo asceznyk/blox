@@ -1,6 +1,9 @@
+let tokens = [];
+
 function run(program) {
 	program += " ";
-	let tokens = lexer(program);
+	tokens = lexer(program);
+	//let ast = parser(tokens);
 	shell.innerHTML = '--running program--';
 }
 
