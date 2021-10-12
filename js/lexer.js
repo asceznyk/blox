@@ -11,7 +11,7 @@ var Term = function(type, x) {
 var Bools = ['true', 'false'];
 var Definitions = ['def', 'while', 'for', 'in', 'if', 'else', 'return', 'print'];
 var Operators = ['=', '+', '-', '*', '/', '==', '++', '--', '+=', '-='];
-var Seperators = ['(', ')', '{', '}', '[', ']', ';', ':', ',', '.'];
+//var Seperators = ['(', ')', '{', '}', '[', ']', ';', ':', ',', '.'];
 
 function skipSpaceComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), '');
@@ -45,6 +45,8 @@ function tokenize(program) {
 		} else {
 			throw new SyntaxError('Expected one of valid operators');
 		}
+	} else if (match = /^[\(\)\{\}\[\]\;\:\,\.]+/.exec(program)) {
+		token = new Term('seperator', match[0]);
 	} else {
 		token = {}
 		match = [' '];
