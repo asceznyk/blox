@@ -1,5 +1,3 @@
-//var Seperators = ['(', ')', '{', '}', '[', ']', ';', ':', ',', '.'];
-
 function skipSpaceComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), '');
   string = string.replace((/\`([\s\S]|[\r\n]).+?(?=\`)\`/gsi), '');
@@ -42,7 +40,7 @@ function tokenize(program) {
 	return [token, program.slice(match[0].length)];
 }
 
-function lexer(program) {
+function lex(program) {
 	program = skipSpaceComments(program);
 
 	let tokens = [];

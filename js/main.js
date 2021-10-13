@@ -2,8 +2,8 @@ let tokens = [];
 
 function run(program) {
 	program += " ";
-	tokens = lexer(program);
-	//let ast = parser(tokens);
+	tokens = lex(program);
+	//let ast = parse(tokens);
 	shell.innerHTML = '--running program--';
 }
 
