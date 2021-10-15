@@ -1,7 +1,7 @@
 function skipSpaceComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), '');
   string = string.replace((/\`([\s\S]|[\r\n]).+?(?=\`)\`/gsi), '');
-  let first = string.search(/\S/);
+  let first = string.search(/[\S\n]/);
 	if (first == -1) return "";
 	return string.slice(first);
 }
@@ -32,6 +32,8 @@ function tokenize(program) {
 		}
 	} else if (match = /^[\(\)\{\}\[\]\;\:\,\.]/.exec(program)) {
 		token = new Term('seperator', match[0]);
+	} else if (match = /^[\n\r]/.exec(program)) {
+		token = new Term('newline', match[0]);
 	} else {
 		token = {}
 		match = [' '];

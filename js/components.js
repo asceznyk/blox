@@ -11,3 +11,5 @@ var Term = function(type, x) {
 var Bools = ['true', 'false'];
 var Definitions = ['def', 'while', 'for', 'in', 'if', 'else', 'return', 'print'];
 var Operators = ['=', '+', '-', '*', '/', '==', '++', '--', '+=', '-=', '**'];
+
+
