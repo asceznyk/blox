@@ -23,17 +23,20 @@ var Parser = function(tokens) {
 
 Parser.prototype.expr = function(prev) {
 	let curr = this.tokens.next;
-	if (curr.type === 'newline') {
-		return prev;
+	if (curr !== null) {
+		if (curr.name === ';') {
+			return prev;
+		}
 	}
-
 	this.tokens.peek();
 	if (curr.type === 'identifier' || curr instanceof Literal) {
 		return this.expr(curr);
-	} else if (curr.type == 'operator') {
+	} else if (curr.type === 'operator') {
 		let next = this.expr(null);
 		curr['args'] = [prev, next];
 		return this.expr(curr);
+	} else if (curr.type === 'definition') {
+		
 	}
 }
 

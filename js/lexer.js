@@ -1,7 +1,7 @@
 function skipSpaceComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), '');
   string = string.replace((/\`([\s\S]|[\r\n]).+?(?=\`)\`/gsi), '');
-  let first = string.search(/[\S\n]/);
+  let first = string.search(/[\S]/);
 	if (first == -1) return "";
 	return string.slice(first);
 }
