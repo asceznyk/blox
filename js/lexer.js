@@ -30,7 +30,7 @@ function tokenize(program) {
 		} else {
 			throw new SyntaxError('Expected one of valid operators');
 		}
-	} else if (match = /^[\(\)\{\}\[\]\;\:\,\.]/.exec(program)) {
+	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.]/.exec(program)) {
 		token = new Term('seperator', match[0]);
 	} else if (match = /^[\n\r]/.exec(program)) {
 		token = new Term('newline', match[0]);

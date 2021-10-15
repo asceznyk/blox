@@ -21,6 +21,31 @@ var Parser = function(tokens) {
 	this.tokens = tokens;
 }
 
+Parser.prototype.multipleExprs = function(sep, end) {
+	let branch = [];
+	if(this.tokens.next) /* rest to be written */
+}
+
+Parser.prototype.args = function() {
+	if (this.tokens.next.name != ':') {
+		return [];
+	}
+	this.tokens.peek();
+	let next = this.tokens.next;
+	if (next.name !== "(") {
+		throw new SyntaxError("Expected '(' after ':'");
+	} 
+	this.tokens.peek();
+	let branch = this.multipleExprs(",", ")");
+	for (let b of branch) {
+		if(b instanceof Literal || b.type !== 'identifier') {
+			throw new SyntaxError("Expected variables");
+		}
+	}
+
+	return branch;	
+}
+
 Parser.prototype.expr = function(prev) {
 	let curr = this.tokens.next;
 	if (curr !== null) {
@@ -35,8 +60,8 @@ Parser.prototype.expr = function(prev) {
 		let next = this.expr(null);
 		curr['args'] = [prev, next];
 		return this.expr(curr);
-	} else if (curr.type === 'definition') {
-		
+	} else if (curr.type === 'function') {
+		let args = this.args();
 	}
 }
 

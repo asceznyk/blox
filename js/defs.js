@@ -9,7 +9,7 @@ var Term = function(type, x) {
 }
 
 var Bools = ['true', 'false'];
-var Definitions = ['while', 'for', 'in', 'if', 'else', 'print'];
+var Definitions = ['bloc', 'while', 'for', 'in', 'if', 'else', 'print'];
 var Operators = ['=', '+', '-', '*', '/', '==', '++', '--', '+=', '-=', '**'];
 
 
