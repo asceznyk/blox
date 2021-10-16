@@ -8,8 +8,26 @@ var Term = function(type, x) {
 	this.name = x;
 }
 
+var Stream = function(tokens) {
+	this.tokens = tokens;
+	this.index = 0;
+	this.fill(); 
+}
+
+Stream.prototype.fill = function () {
+	this.next = this.tokens[this.index++];
+	if(this.next === undefined) {
+		this.next = null;
+	}
+}
+
+Stream.prototype.peek = function () {
+	let token = this.next;
+	this.fill();
+	return token;
+}
+
 var Bools = ['true', 'false'];
 var Definitions = ['bloc', 'while', 'for', 'in', 'if', 'else', 'print'];
 var Operators = ['=', '+', '-', '*', '/', '==', '++', '--', '+=', '-=', '**'];
-
 

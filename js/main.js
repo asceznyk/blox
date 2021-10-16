@@ -3,6 +3,7 @@ let tokens = [];
 function run(program) {
 	program += " ";
 	tokens = lex(program);
+	tokens.push(new Term('newline', '\n'));
 	//let ast = parse(tokens);
 	shell.innerHTML = '--running program--';
 }
