@@ -50,8 +50,8 @@ Parser.prototype.expr = function(prev, stops) {
 			return prev;
 		}
 	}
-	console.log(curr);
 	this.tokens.peek();
+
 	if (curr.type === 'identifier' || curr instanceof Literal) {
 		return this.expr(curr, stops);
 	} else if (curr.type === 'operator') {
@@ -61,7 +61,8 @@ Parser.prototype.expr = function(prev, stops) {
 	} else if (curr.name === '{') {
 		curr.args = this.args();
 		curr.body = this.multipleExprs('\n', '}');
-	}
+		return this.expr(curr, ['\n']);
+	} 
 }
 
 function parse(tokens) {	
@@ -75,7 +76,6 @@ function parse(tokens) {
 			ast.push(expr);
 		}
 		parser.tokens.peek();
-		console.log(ast);
 	}
 
 	return ast;
