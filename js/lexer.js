@@ -11,12 +11,7 @@ function tokenize(program) {
 	let token;
 	
 	if(match = /^[A-Za-z]+/.exec(program)) {
-		token = match[0];
-		
-		/*if(Definitions.includes(token)) {
-			token = new Term('definition', token);
-		} else*/ 
-		
+		token = match[0];	
 		if(Bools.includes(token)) {
 			token = new Literal(Boolean, token);
 		} else {
@@ -26,13 +21,13 @@ function tokenize(program) {
 		token = new Literal(String, match[0]);
 	} else if (match = /^[0-9.0-9]+/.exec(program)) {
 		token = new Literal(Number, match[0]);
-	} else if (match = /^[\=\+\-\*\/]+/.exec(program)) {
+	} else if (match = /^[\=\+\-\*\>\<\%/]+/.exec(program)) {
 		token = match[0];
-		if(Operators.includes(token)) {
+		if(token.length === 1 || DblOps.includes(token)) {
 			token = new Term('operator', token);
 		} else {
-			throw new SyntaxError('Expected one of valid operators');
-		}
+			throw new SyntaxError(`Expected one of valid operators`);
+		} 
 	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.]/.exec(program)) {
 		token = new Term('seperator', match[0]);
 	} else if (match = /^[\n\r]/.exec(program)) {

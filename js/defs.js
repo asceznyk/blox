@@ -34,5 +34,5 @@ Stream.prototype.peek = function () {
 
 var Bools = ['true', 'false'];
 var Definitions = ['while', 'for', 'in', 'if', 'else', 'print'];
-var Operators = ['=', '+', '-', '*', '/', '==', '++', '--', '+=', '-=', '**'];
+var DblOps = ['==', '++', '--', '+=', '-=', '*=', '/=', '**'];
 
