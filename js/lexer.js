@@ -12,9 +12,12 @@ function tokenize(program) {
 	
 	if(match = /^[A-Za-z]+/.exec(program)) {
 		token = match[0];
-		if(Definitions.includes(token)) {
+		
+		/*if(Definitions.includes(token)) {
 			token = new Term('definition', token);
-		} else if(Bools.includes(token)) {
+		} else*/ 
+		
+		if(Bools.includes(token)) {
 			token = new Literal(Boolean, token);
 		} else {
 			token = new Term('identifier', token);	

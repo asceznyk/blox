@@ -8,6 +8,11 @@ var Term = function(type, x) {
 	this.name = x;
 }
 
+var Expression = function (type, x = null) {
+	this.type = type;
+	this.name = x;
+}
+
 var Stream = function(tokens) {
 	this.tokens = tokens;
 	this.index = 0;
@@ -28,6 +33,6 @@ Stream.prototype.peek = function () {
 }
 
 var Bools = ['true', 'false'];
-var Definitions = ['bloc', 'while', 'for', 'in', 'if', 'else', 'print'];
+var Definitions = ['while', 'for', 'in', 'if', 'else', 'print'];
 var Operators = ['=', '+', '-', '*', '/', '==', '++', '--', '+=', '-=', '**'];
 
