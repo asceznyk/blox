@@ -4,19 +4,18 @@ var Parser = function(tokens) {
 
 Parser.prototype.multipleExprs = function(sep, end) {
 	let branch = [];
+
 	let name = this.tokens.next.name;
-	
 	if(name === end) {
 		this.tokens.peek();
 	} else {
-
 		let argParser = new Parser(this.tokens);
 		while (name !== end) {
 			let expr = argParser.expr(null, [sep, end]); 
 			if (expr !== null) {
 				branch.push(expr);
 			}
-			name = this.tokens.next.name;
+			name = this.tokens.next.name;	
 			this.tokens.peek();
 		}
 	}
@@ -25,19 +24,21 @@ Parser.prototype.multipleExprs = function(sep, end) {
 }
 
 Parser.prototype.args = function() {
-	if (this.tokens.next.name != ':') {
+	let name = this.tokens.next.name;
+	if (name != ':') {
 		return [];
 	}
 	this.tokens.peek();
-	let next = this.tokens.next;
-	if (next.name !== '(') {
-		throw new SyntaxError("Expected '(' after ':'");
-	} 
+
+	if (name !== '(') {
+		throw new SyntaxError(`Expected '(' after ':'`);
+	}
 	this.tokens.peek();
+	
 	let branch = this.multipleExprs(',', ')');
 	for (let b of branch) {
 		if(b instanceof Literal || b.type !== 'identifier') {
-			throw new SyntaxError("Expected variables");
+			throw new SyntaxError(`You cannot assign to anything but Variables`);
 		}
 	}
 
@@ -54,7 +55,7 @@ Parser.prototype.expr = function(prev, stops) {
 	}
 	this.tokens.peek();
 
-	if (curr.type === 'identifier' || curr instanceof Literal) {
+	if ((curr.type === 'identifier' || curr instanceof Literal) && prev === null) {
 		return this.expr(curr, stops);
 	} else if (curr.type === 'operator') {
 		let next = this.expr(null, ['\n']);
@@ -71,7 +72,7 @@ Parser.prototype.expr = function(prev, stops) {
 		expr.args = this.multipleExprs(',', ')');
 		return this.expr(expr, ['\n']);
 	} else {
-		throw new SyntaxError(`Unexpected expression ${prev}`);
+		throw new SyntaxError(`Unexpected token: ${prev.name}`);
 	}
 }
 
