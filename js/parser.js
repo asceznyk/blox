@@ -37,7 +37,7 @@ Parser.prototype.args = function() {
 	let branch = this.multipleExprs(',', ')');
 	for (let b of branch) {
 		if(b instanceof Literal || b.type !== 'identifier') {
-			throw new SyntaxError(`Cannot pass Literals as arguments`);
+			throw new TypeError(`Cannot pass Literals as arguments`);
 		}
 	}
 
