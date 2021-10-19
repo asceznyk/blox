@@ -38,7 +38,7 @@ Parser.prototype.args = function() {
 	let branch = this.multipleExprs(',', ')');
 	for (let b of branch) {
 		if(b instanceof Literal || b.type !== 'identifier') {
-			throw new SyntaxError(`You cannot assign to anything but Variables`);
+			throw new SyntaxError(`Cannot pass Literals as arguments`);
 		}
 	}
 
@@ -72,7 +72,7 @@ Parser.prototype.expr = function(prev, stops) {
 		expr.args = this.multipleExprs(',', ')');
 		return this.expr(expr, ['\n']);
 	} else {
-		throw new SyntaxError(`Unexpected token: ${prev.name}`);
+		throw new SyntaxError(`Unexpected token: ${curr.name}`);
 	}
 }
 
