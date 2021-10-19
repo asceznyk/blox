@@ -56,22 +56,25 @@ Parser.prototype.expr = function(prev, stops) {
 
 	if ((curr.type === 'identifier' || curr instanceof Literal) && prev === null) {
 		return this.expr(curr, stops);
-	} else if (curr.type === 'operator') {
-		let next = this.expr(null, stops);
-		expr = new Expression('operation', curr.name);
-		expr.args = [prev, next];
-		return expr; //this.expr(expr, ['\n']);
-	} else if (curr.name === '{') {
-		expr = new Expression('function');
-		expr.args = this.args();
-		expr.body = this.multipleExprs('\n', '}');
-		return expr; //this.expr(expr, ['\n']);
-	} else if (curr.name === '(') {
-		expr = new Expression('call', prev);
-		expr.args = this.multipleExprs(',', ')');
-		return expr; //this.expr(expr, ['\n']);
 	} else {
-		throw new SyntaxError(`Unexpected token: ${curr.name}`);
+		if (curr.type === 'operator') {
+			let next = this.expr(null, stops);
+			expr = new Expression('operation', curr.name);
+			expr.args = [prev, next];
+		} else if (curr.name === '{') {
+			expr = new Expression('function');
+			expr.args = this.args();
+			expr.body = this.multipleExprs('\n', '}');
+		} else if (curr.name === '(') {
+			expr = new Expression('call', prev);
+			expr.args = this.multipleExprs(',', ')');
+		} else if (curr.name === '[') {
+			expr = new Expression('array');
+			expr.args = this.multipleExprs(',', ']'); 
+		} else {
+			throw new SyntaxError(`Unexpected token: ${curr.name}`);
+		}
+		return expr;
 	}
 }
 
