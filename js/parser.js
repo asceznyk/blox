@@ -57,23 +57,26 @@ Parser.prototype.expr = function(prev, stops) {
 	if ((curr.type === 'identifier' || curr instanceof Literal) && prev === null) {
 		return this.expr(curr, stops);
 	} else {
-		if (curr.type === 'operator') {
-			let next = this.expr(null, stops);
+		if (curr.type === 'operator') { 
 			expr = new Expression('operation', curr.name);
-			expr.args = [prev, next];
+			expr.args = [prev, this.expr(null, stops)];
 		} else if (curr.name === '{') {
 			expr = new Expression('function');
 			expr.args = this.args();
 			expr.body = this.multipleExprs('\n', '}');
 		} else if (curr.name === '(') {
-			expr = new Expression('call', prev);
+			expr = new Expression('call', prev.name);
 			expr.args = this.multipleExprs(',', ')');
 		} else if (curr.name === '[') {
 			expr = new Expression('array');
 			expr.args = this.multipleExprs(',', ']'); 
+		} else if (curr.name === '.') {
+			expr = new Expression('index');
+			expr.args = [prev, this.expr(null, stops)];
 		} else {
 			throw new SyntaxError(`Unexpected token: ${curr.name}`);
 		}
+
 		return expr;
 	}
 }

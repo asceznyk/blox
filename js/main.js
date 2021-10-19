@@ -4,7 +4,7 @@ let ast = [];
 function run(program) {
 	program += " ";
 	tokens = lex(program);
-	tokens.push(new Term('newline', '\n'));
+	tokens.push(new Term('seperator', '\n'));
 	ast = parse(tokens);
 	shell.innerHTML = '--running program--';
 }

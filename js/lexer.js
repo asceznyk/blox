@@ -19,7 +19,7 @@ function tokenize(program) {
 		}
 	} else if (match = /^(["'])(?:(?=(\\?))\2.)*?\1/.exec(program)) {
 		token = new Literal(String, match[0]);
-	} else if (match = /^[0-9.0-9]+/.exec(program)) {
+	} else if (match = /^(\d+(\.\d+)?)/.exec(program)) {
 		token = new Literal(Number, match[0]);
 	} else if (match = /^[\=\+\-\*\>\<\%/]+/.exec(program)) {
 		token = match[0];
@@ -28,10 +28,8 @@ function tokenize(program) {
 		} else {
 			throw new SyntaxError(`Expected one of valid operators`);
 		} 
-	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.]/.exec(program)) {
+	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.\n\r]/.exec(program)) {
 		token = new Term('seperator', match[0]);
-	} else if (match = /^[\n\r]/.exec(program)) {
-		token = new Term('newline', match[0]);
 	} else {
 		token = {}
 		match = [' '];

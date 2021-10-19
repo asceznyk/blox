@@ -1,16 +1,13 @@
-hello {
-	say "Hello! order number 8612 -- calling --"
+sum = {:(arr)
+	s = 0
+  i = 0
+  while(i < arr.len, {s += arr.i})
+  s
 }
 
-sum (array) {
-	sum = 0
-	for s in array {
-		sum += s
-	}
-	return sum
-}
+total = sum([1,2,3])
+print(total)
 
-hello()
-say sum([1.99,2.66,3.75])
+
 
 
