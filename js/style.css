@@ -73,6 +73,7 @@ body {
 	position:relative;
 	right: 0px;
 	float: right;
+	cursor:pointer;
 }
 
 .gap {

@@ -24,13 +24,12 @@ Parser.prototype.multipleExprs = function(sep, end) {
 }
 
 Parser.prototype.args = function() {
-	let name = this.tokens.next.name;
-	if (name != ':') {
+	if (this.tokens.next.name != ':') {
 		return [];
 	}
 	this.tokens.peek();
-
-	if (name !== '(') {
+	
+	if (this.tokens.next.name !== '(') {
 		throw new SyntaxError(`Expected '(' after ':'`);
 	}
 	this.tokens.peek();
@@ -58,19 +57,19 @@ Parser.prototype.expr = function(prev, stops) {
 	if ((curr.type === 'identifier' || curr instanceof Literal) && prev === null) {
 		return this.expr(curr, stops);
 	} else if (curr.type === 'operator') {
-		let next = this.expr(null, ['\n']);
+		let next = this.expr(null, stops);
 		expr = new Expression('operation', curr.name);
 		expr.args = [prev, next];
-		return this.expr(expr, ['\n']);
+		return expr; //this.expr(expr, ['\n']);
 	} else if (curr.name === '{') {
 		expr = new Expression('function');
 		expr.args = this.args();
 		expr.body = this.multipleExprs('\n', '}');
-		return this.expr(expr, ['\n']);
+		return expr; //this.expr(expr, ['\n']);
 	} else if (curr.name === '(') {
 		expr = new Expression('call', prev);
 		expr.args = this.multipleExprs(',', ')');
-		return this.expr(expr, ['\n']);
+		return expr; //this.expr(expr, ['\n']);
 	} else {
 		throw new SyntaxError(`Unexpected token: ${curr.name}`);
 	}
