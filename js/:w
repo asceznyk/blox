@@ -38,33 +38,6 @@ Stream.prototype.peek = function () {
 
 var Env = function(parent=null) {
 	this.parent = parent;
-	this.items = {};
-}
-
-Env.prototype.get = function(name) {
-	if(name in this.items) {
-		return this.items[name];
-	} else if (this.parent !== null) {
-		return this.parent.get(name);
-	} else {
-		return null;
-	}
-}
-
-Env.prototype.set = function(name, value) {
-	this.items[name] = value;
-}
-
-Env.prototype.contains = function(name) {
-	return name in this.items;
-}
-
-Env.prototype.str = function() {
-	let str = '';
-	for(let k in this.items) {
-		str += k + ' := ' + this.items[k];
-	}	
-	return str;
 }
 
 function CaptureError(err) {

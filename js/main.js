@@ -6,7 +6,11 @@ function run(program) {
 	tokens = lex(program);
 	tokens.push(new Term('seperator', '\n'));
 	ast = parse(tokens);
-	shell.innerHTML = '--running program--';
+
+	shell.innerHTML = ' \
+	running.. <br/> \
+	finished! \
+	';	
 }
 
 let shell = document.getElementById("shell");

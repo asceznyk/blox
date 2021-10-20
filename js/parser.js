@@ -30,14 +30,14 @@ Parser.prototype.args = function() {
 	this.tokens.peek();
 	
 	if (this.tokens.next.name !== '(') {
-		throw new SyntaxError(`Expected '(' after ':'`);
+		throw CaptureError(new SyntaxError(`Expected '(' after ':'`));
 	}
 	this.tokens.peek();
 	
 	let branch = this.multipleExprs(',', ')');
 	for (let b of branch) {
 		if(b instanceof Literal || b.type !== 'identifier') {
-			throw new TypeError(`Cannot pass Literals as arguments`);
+			throw CaptureError(new TypeError(`Cannot pass Literals as function arguments`));
 		}
 	}
 
@@ -74,7 +74,7 @@ Parser.prototype.expr = function(prev, stops) {
 			expr = new Expression('index');
 			expr.args = [prev, this.expr(null, stops)];
 		} else {
-			throw new SyntaxError(`Unexpected token: ${curr.name}`);
+			throw CaptureError(new SyntaxError(`Unexpected token: ${curr.name}`));
 		}
 
 		return expr;

@@ -26,7 +26,7 @@ function tokenize(program) {
 		if(token.length === 1 || DblOps.includes(token)) {
 			token = new Term('operator', token);
 		} else {
-			throw new SyntaxError(`Expected one of valid operators`);
+			throw CaptureError(new SyntaxError(`Expected one of valid operators ${DblOps}`));
 		} 
 	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.\n\r]/.exec(program)) {
 		token = new Term('seperator', match[0]);
