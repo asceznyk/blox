@@ -6,7 +6,7 @@ function run(program) {
 	tokens = lex(program);
 	tokens.push(new Term('seperator', '\n'));
 	ast = parse(tokens);
-	//evaluate(ast, new Env());
+	//interpret(ast, new Env());
 
 	shell.innerHTML = ' \
 	running.. <br/> \
