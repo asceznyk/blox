@@ -23,10 +23,10 @@ function tokenize(program) {
 		token = new Literal(Number, match[0]);
 	} else if (match = /^[\=\+\-\*\>\<\%/]+/.exec(program)) {
 		token = match[0];
-		if(token.length === 1 || DblOps.includes(token)) {
+		if(token.length === 1 || Operators.includes(token)) {
 			token = new Term('operator', token);
 		} else {
-			throw CaptureError(new SyntaxError(`Expected one of valid operators ${DblOps}`));
+			throw CaptureError(new SyntaxError(`Expected one of valid operators ${Arithmetics}`));
 		} 
 	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.\n\r]/.exec(program)) {
 		token = new Term('seperator', match[0]);

@@ -1,6 +1,9 @@
 let Bools = ['true', 'false'];
 let Definitions = ['while', 'for', 'in', 'if', 'print'];
-let DblOps = ['==', '++', '--', '+=', '-=', '*=', '/=', '**'];
+let Arithmetics = ['*', '+', '/', '-', '**', '%'];
+let Assignments = ['-=', '+=', '*=', '/=', '**=', '%='];
+let Comparisions = ['==', '<', '>', '<=', '>=', '!='];
+let Operators = [].concat.apply([], [Arithmetics, Comparisions]); 
 
 let Literal = function(ftype, x) {
 	this.value = ftype ==  Boolean ? JSON.parse(x) : ftype(x);
@@ -39,6 +42,10 @@ Stream.prototype.peek = function () {
 let Env = function(parent=null) {
 	this.parent = parent;
 	this.items = {};
+
+	for(let op of Operators) {
+		this.items[op] = Function('a, b', `return a ${op} b;`);
+	}
 }
 
 Env.prototype.get = function(name) {
