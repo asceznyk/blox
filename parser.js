@@ -1,4 +1,4 @@
-var Parser = function(tokens) {
+let Parser = function(tokens) {
 	this.tokens = tokens;
 }
 
@@ -57,8 +57,15 @@ Parser.prototype.expr = function(prev, stops) {
 	if ((curr.type === 'identifier' || curr instanceof Literal) && prev === null) {
 		return this.expr(curr, stops);
 	} else {
-		if (curr.type === 'operator') { 
-			expr = new Expression('operation', curr.name);
+		if (curr.type === 'operator') {
+			let type = curr.name === '=' ? 'assignment' : 'operation'	
+			if (type === 'assignment') {
+				if(prev.type !== 'identifier' || prev instanceof Literal) {
+					throw CaptureError(new TypeError(`Cannot assign to anything but symbols or chars`));
+				}
+			}
+
+			expr = new Expression(type, curr.name);
 			expr.args = [prev, this.expr(null, stops)];
 		} else if (curr.name === '{') {
 			expr = new Expression('function');

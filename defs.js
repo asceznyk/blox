@@ -1,23 +1,23 @@
-var Bools = ['true', 'false'];
-var Definitions = ['while', 'for', 'in', 'if', 'print'];
-var DblOps = ['==', '++', '--', '+=', '-=', '*=', '/=', '**'];
+let Bools = ['true', 'false'];
+let Definitions = ['while', 'for', 'in', 'if', 'print'];
+let DblOps = ['==', '++', '--', '+=', '-=', '*=', '/=', '**'];
 
-var Literal = function(ftype, x) {
+let Literal = function(ftype, x) {
 	this.value = ftype ==  Boolean ? JSON.parse(x) : ftype(x);
 	this.type = typeof this.value;
 }
 
-var Term = function(type, x) {
+let Term = function(type, x) {
 	this.type = type;
 	this.name = x;
 }
 
-var Expression = function (type, x = null) {
+let Expression = function (type, x = null) {
 	this.type = type;
 	this.name = x;
 }
 
-var Stream = function(tokens) {
+let Stream = function(tokens) {
 	this.tokens = tokens;
 	this.index = 0;
 	this.fill(); 
@@ -36,7 +36,7 @@ Stream.prototype.peek = function () {
 	return token;
 }
 
-var Env = function(parent=null) {
+let Env = function(parent=null) {
 	this.parent = parent;
 	this.items = {};
 }
