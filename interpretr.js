@@ -1,35 +1,56 @@
-
 function evalExpr(expr, env) {
-	if (expr instanceof Literal) {
+	let val, name;
+	if (expr instanceof Literal || expr === null) {
 		return expr;
 	} else if (expr.type === 'identifier') {
-		let val = env.get(expr.name);
+		name = expr.name;
+		val = env.get(name);
 		if(!val) {
-			throw CaptureError(new ReferenceError(`Undefined variable ${expr.name}`));
+			throw CaptureError(new ReferenceError(`Undefined variable ${name}`));
 		}
 
 		return val;
 	} else if (expr.type === 'assignment') {
-		let name = expr.args[0].name;
+		name = expr.args[0].name;
 		if(name in env.items) {
 			throw CaptureError(new ReferenceError(`Cannot re-assign variable ${name}`));
 		}
 
-		let val = evalExpr(expr.args[1], env);
+		val = evalExpr(expr.args[1], env);	
 		env.set(name, val);
+
 		return val;
 	} else if (expr.type === 'operation') {
-		let [a, b] = expr.args.map(k => evalExpr(k, env));	
+		name = expr.name;
+		let [a, b] = expr.args.map(k => evalExpr(k, env));
 
-		if(!(a.type === b.type)) {
-			throw CaptureError(new TypeError(`All Terms or Literals must be of same type`));
+		let getVal = function() {
+			return new Literal(a.type === 'boolean' ? Boolean : Number, env.items[name](a.value, b.value));
 		}
+		
+		if(Increments.includes(name) || Assignments.includes(name)) {
+			let term = expr.args[0];
+			if(term.type !== 'identifier' || Definitions.includes(term.name) || Bools.includes(term.name)) {
+				throw CaptureError(new SyntaxError(`Cannot operate on type ${term.type}`));
+			}
 
-		if(!(Operators.includes(expr.name))) {
-			throw CaptureError(new ReferenceError(`Expected one of Operators ${Operators}`));
-		}
+			if(Increments.includes(name)) {
+				if(b !== null) {
+					throw CaptureError(new SyntaxError(`Cannot use increment-ops as arithmetic-ops`));
+				}
+				b = new Literal(Number, 1);	
+			}
 
-		return new Literal(a.type === 'boolean' ? Boolean : Number, env.items[expr.name](a.value, b.value));
+			val = getVal();
+			env.set(term.name, val);
+		} else {
+			if(a.type !== b.type) {
+				throw CaptureError(new TypeError(`All Terms or Literals must be of same type`));
+			}
+			val = getVal();
+		}	
+		
+		return val;
 	}
 }
 
@@ -49,6 +70,4 @@ function interpret(ast, env) {
 
 	return evl;
 }
-
-
 

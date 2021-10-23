@@ -54,7 +54,10 @@ Parser.prototype.expr = function(prev, stops) {
 	}
 	this.tokens.peek();
 
-	if ((curr.type === 'identifier' || curr instanceof Literal) && prev === null) {
+	if ((curr.type === 'identifier' || 
+		curr.type === 'null' || 
+		curr instanceof Literal) && 
+		prev === null) {
 		return this.expr(curr, stops);
 	} else {
 		if (curr.type === 'operator') {

@@ -1,9 +1,10 @@
 let Bools = ['true', 'false'];
-let Definitions = ['while', 'for', 'in', 'if', 'print'];
+let Definitions = ['while', 'for', 'in', 'if', 'print', 'set'];
 let Arithmetics = ['*', '+', '/', '-', '**', '%'];
+let Increments = ['++', '--'];
 let Assignments = ['-=', '+=', '*=', '/=', '**=', '%='];
 let Comparisions = ['==', '<', '>', '<=', '>=', '!='];
-let Operators = [].concat.apply([], [Arithmetics, Comparisions]); 
+let Operators = [].concat.apply([], [Arithmetics, Comparisions, Increments, Assignments]); 
 
 let Literal = function(ftype, x) {
 	this.value = ftype ==  Boolean ? JSON.parse(x) : ftype(x);
@@ -39,12 +40,16 @@ Stream.prototype.peek = function () {
 	return token;
 }
 
+function CheckIncrement(op) {
+	return 
+}
+
 let Env = function(parent=null) {
 	this.parent = parent;
 	this.items = {};
 
 	for(let op of Operators) {
-		this.items[op] = Function('a, b', `return a ${op} b;`);
+		this.items[op] = Function('a, b', `return a ${Increments.includes(op) ? op[0] + '=' : op} b;`);
 	}
 }
 

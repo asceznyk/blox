@@ -14,6 +14,8 @@ function tokenize(program) {
 		token = match[0];	
 		if(Bools.includes(token)) {
 			token = new Literal(Boolean, token);
+		} else if (token === 'null') {
+			token = new Term('null', token);
 		} else {
 			token = new Term('identifier', token);	
 		}
@@ -26,7 +28,7 @@ function tokenize(program) {
 		if(token.length === 1 || Operators.includes(token)) {
 			token = new Term('operator', token);
 		} else {
-			throw CaptureError(new SyntaxError(`Expected one of valid operators ${Arithmetics}`));
+			throw CaptureError(new SyntaxError(`Expected one of valid operators ${Operators}`));
 		} 
 	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.\n\r]/.exec(program)) {
 		token = new Term('seperator', match[0]);
