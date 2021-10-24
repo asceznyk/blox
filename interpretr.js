@@ -1,3 +1,9 @@
+function argCheck(fname, params, args) {
+	if(params.length !== args.length) {
+		throw CaptureError(new ReferenceError(`Number of Parameters dont match Arguments in ${fname}`))
+	}
+}
+
 function evalExpr(expr, env) {
 	let val, name;
 	if (expr instanceof Literal || expr === null) {
