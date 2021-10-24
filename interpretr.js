@@ -1,6 +1,26 @@
 function argCheck(fname, params, args) {
 	if(params.length !== args.length) {
-		throw CaptureError(new ReferenceError(`Number of Parameters dont match Arguments in ${fname}`))
+		throw CaptureError(new ReferenceError(`${args.length} arguments passed ${fname}  \
+		requries ${params.length} arguments `));
+	}
+}
+
+function funcCall(expr, env) {
+	let fn = evalExpr(expr.name, env);
+	let args = expr.args.map(k => evalExpr(k, env));	
+
+	if(fn.type === 'function') {
+		let params = fn.args;
+		argCheck(expr.name, params, args);
+		
+		let body = fn.body;
+		let childEnv = fn.env;
+
+		for(let i = 0; i < params.length; i++) {
+			childEnv.set(params[i].name, args[i]);
+		}
+
+		return interpret(body, childEnv);
 	}
 }
 
@@ -57,7 +77,12 @@ function evalExpr(expr, env) {
 		}	
 		
 		return val;
-	}
+	} else if (expr.type === 'function') {
+		expr.env = new Env(env);
+		return expr;
+	} else if (expr.type === 'call') {
+		return funcCall(expr, env);
+	} 
 }
 
 function evalIter(ast, env) {

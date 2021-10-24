@@ -75,7 +75,7 @@ Parser.prototype.expr = function(prev, stops) {
 			expr.args = this.args();
 			expr.body = this.multipleExprs('\n', '}');
 		} else if (curr.name === '(') {
-			expr = new Expression('call', prev.name);
+			expr = new Expression('call', prev);
 			expr.args = this.multipleExprs(',', ')');
 		} else if (curr.name === '[') {
 			expr = new Expression('array');
