@@ -1,5 +1,5 @@
 let Bools = ['true', 'false'];
-let Definitions = ['while', 'for', 'in', 'if', 'print', 'set'];
+let Definitions = ['while', 'if', 'set', 'print'];
 let Arithmetics = ['*', '+', '/', '-', '**', '%'];
 let Increments = ['++', '--'];
 let Assignments = ['-=', '+=', '*=', '/=', '**=', '%='];
@@ -16,9 +16,10 @@ let Term = function(type, x) {
 	this.name = x;
 }
 
-let Expression = function (type, x = null) {
+let Expression = function (type, x=null, args=[]) {
 	this.type = type;
 	this.name = x;
+	this.args = args;
 }
 
 let Stream = function(tokens) {
@@ -40,8 +41,15 @@ Stream.prototype.peek = function () {
 	return token;
 }
 
-function CheckIncrement(op) {
-	return 
+let stripComments = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+let argNames = /([^\s,]+)/g;
+
+function getParamNames(func) {
+  let fnStr = func.toString().replace(stripComments, '');
+  let result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(argNames);
+  if(result === null)
+     result = [];
+  return result;
 }
 
 let Env = function(parent=null) {
@@ -51,6 +59,9 @@ let Env = function(parent=null) {
 	for(let op of Operators) {
 		this.items[op] = Function('a, b', `return a ${Increments.includes(op) ? op[0] + '=' : op} b;`);
 	}
+
+	this.items['if'] = new Expression('native');
+	this.items['if'].jsfn = nativeIF;
 }
 
 Env.prototype.get = function(name) {

@@ -68,21 +68,16 @@ Parser.prototype.expr = function(prev, stops) {
 				}
 			}
 
-			expr = new Expression(type, curr.name);
-			expr.args = [prev, this.expr(null, stops)];
+			expr = new Expression(type, curr.name, [prev, this.expr(null, stops)]);
 		} else if (curr.name === '{') {
-			expr = new Expression('function');
-			expr.args = this.args();
+			expr = new Expression('function', null, this.args()); 
 			expr.body = this.multipleExprs('\n', '}');
 		} else if (curr.name === '(') {
-			expr = new Expression('call', prev);
-			expr.args = this.multipleExprs(',', ')');
+			expr = new Expression('call', prev, this.multipleExprs(',', ')'));	
 		} else if (curr.name === '[') {
-			expr = new Expression('array');
-			expr.args = this.multipleExprs(',', ']'); 
+			expr = new Expression('array', null, this.multipleExprs(',', ']'));	
 		} else if (curr.name === '.') {
-			expr = new Expression('index');
-			expr.args = [prev, this.expr(null, stops)];
+			expr = new Expression('index', null, [prev, this.expr(null, stops)]);	
 		} else {
 			throw CaptureError(new SyntaxError(`Unexpected token: ${curr.name}`));
 		}

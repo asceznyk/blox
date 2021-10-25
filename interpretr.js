@@ -7,10 +7,11 @@ function argCheck(fname, params, args) {
 
 function funcCall(expr, env) {
 	let fn = evalExpr(expr.name, env);
+	let params;
 	let args = expr.args.map(k => evalExpr(k, env));	
-
+	
 	if(fn.type === 'function') {
-		let params = fn.args;
+		params = fn.args;
 		argCheck(expr.name, params, args);
 		
 		let body = fn.body;
@@ -21,6 +22,14 @@ function funcCall(expr, env) {
 		}
 
 		return interpret(body, childEnv);
+	} else if (fn.type === 'native') {
+		let jsfn = fn.jsfn;
+		params = getParamNames(jsfn); 
+		argCheck(expr.name, params.slice(1), args);
+
+		return jsfn(env, ...args);
+	} else {
+		throw CaptureError(new ReferenceError(`${expr.name.name} is not defined`));
 	}
 }
 
