@@ -59,9 +59,12 @@ let Env = function(parent=null) {
 	for(let op of Operators) {
 		this.items[op] = Function('a, b', `return a ${Increments.includes(op) ? op[0] + '=' : op} b;`);
 	}
+	for(let i = 0; i < Definitions.length; i++) {
+		this.items[Definitions[i]] = new Expression('native');
+	}
 
-	this.items['if'] = new Expression('native');
 	this.items['if'].jsfn = nativeIF;
+	this.items['print'].jsfn = nativePRINT;
 }
 
 Env.prototype.get = function(name) {

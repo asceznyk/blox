@@ -25,11 +25,14 @@ function funcCall(expr, env) {
 	} else if (fn.type === 'native') {
 		let jsfn = fn.jsfn;
 		params = getParamNames(jsfn); 
-		argCheck(expr.name, params.slice(1), args);
+		
+		if(expr.name.name !== 'print') {
+			argCheck(expr.name.name, params.slice(1), args);
+		}
 
 		return jsfn(env, ...args);
 	} else {
-		throw CaptureError(new ReferenceError(`${expr.name.name} is not defined`));
+		throw CaptureError(new ReferenceError(`${expr.name.name} is not a function`));
 	}
 }
 
@@ -91,7 +94,23 @@ function evalExpr(expr, env) {
 		return expr;
 	} else if (expr.type === 'call') {
 		return funcCall(expr, env);
-	} 
+	} else if (expr.type === 'array') {
+		expr.args = expr.args.map(k => evalExpr(k, env));
+		return expr;
+	} else if  (expr.type === 'index') {
+		let [arr, idx] = expr.args.map(k => evalExpr(k, env));
+
+		if(idx.type !== 'number') {
+			throw CaptureError(new TypeError(`Indexes can only be integers!`));
+		} 
+		
+		if(idx.value > arr.args.length-1) {
+			throw CaptureError(new ReferenceError(`Maximum length exceeded`));
+		}
+
+		[arr, idx] = [arr.args, idx.value];
+		return arr[idx];
+	}
 }
 
 function evalIter(ast, env) {
