@@ -32,10 +32,10 @@ function nativeIF(env, truth, fthen, felse) {
 	return evalExpr(expr, env);
 }
 
-function nativeWHILE(env, ...args) {
+function nativeWHILE(env, cond, fdo) {
 	let count = 0;
-	while (evalExpr(args[0], env).value === 1 && count < Limit) {
-		interpret(args.slice(1), env);
+	while (evalExpr(cond, env).value === 1 && count < Limit) {
+		interpret(fdo.body, env);
 		count++;
 	}
 	return null;

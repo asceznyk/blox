@@ -1,7 +1,6 @@
 function argCheck(fname, params, args) {
 	if(params.length !== args.length) {
-		throw CaptureError(new ReferenceError(`${args.length} arguments passed ${fname}  \
-		requries ${params.length} arguments `));
+		throw CaptureError(new ReferenceError(`${args.length} arguments passed ${fname} requries ${params.length} arguments`));
 	}
 }
 
@@ -12,7 +11,7 @@ function funcCall(expr, env) {
 	
 	if(fn.type === 'function') {
 		params = fn.args;
-		argCheck(expr.name, params, args);
+		argCheck(expr.name.name, params, args);
 		
 		let body = fn.body;
 		let childEnv = fn.env;
@@ -26,12 +25,12 @@ function funcCall(expr, env) {
 		let jsfn = fn.jsfn;
 		params = getParamNames(jsfn); 
 		
-		if(!(expr.name.name === 'print' || expr.name.name === 'while')) {
+		if(expr.name.name !== 'print') {
 			argCheck(expr.name.name, params.slice(1), args);
 		}
 
 		if(expr.name.name === 'while') {
-			args = expr.args;
+			args[0] = expr.args[0];
 		}
 
 		return jsfn(env, ...args);
