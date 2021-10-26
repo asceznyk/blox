@@ -1,11 +1,8 @@
 sum = {:(arr)
-	s = 0
+  s = 0
   i = 0
 
-  while(i < arr.len, {
-    s += arr.i
-    i++
-  })
+  while(i < len(arr), s += arr.i, i++)
   s
 }
 
