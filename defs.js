@@ -1,5 +1,6 @@
+let Limit = 100;
 let Bools = ['true', 'false'];
-let Definitions = ['while', 'if', 'set', 'print'];
+let Definitions = ['while', 'if', 'len', 'print'];
 let Arithmetics = ['*', '+', '/', '-', '**', '%'];
 let Increments = ['++', '--'];
 let Assignments = ['-=', '+=', '*=', '/=', '**=', '%='];
@@ -64,6 +65,8 @@ let Env = function(parent=null) {
 	}
 
 	this.items['if'].jsfn = nativeIF;
+	this.items['while'].jsfn = nativeWHILE;
+	this.items['len'].jsfn = nativeLEN;
 	this.items['print'].jsfn = nativePRINT;
 }
 

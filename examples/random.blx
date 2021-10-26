@@ -1,0 +1,19 @@
+f = {:(y) y ** 2}
+
+y = 9
+x = f(y)
+
+if(x > 10, {
+	print("Boo!")
+	print(x, y)
+}, {
+	print("Yeah!")
+})
+
+print(x, "brilliant.. yeah!")
+
+z = [y,1,2,x]
+
+i = 0
+print(z.i, i)
+

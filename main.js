@@ -10,7 +10,8 @@ function run(program) {
 
 	shell.innerHTML = ' \
 	running.. <br/> \
-	finished! \
+	finished! <br/> \
+	--------- <br/><br/> \
 	';	
 }
 

@@ -26,8 +26,12 @@ function funcCall(expr, env) {
 		let jsfn = fn.jsfn;
 		params = getParamNames(jsfn); 
 		
-		if(expr.name.name !== 'print') {
+		if(!(expr.name.name === 'print' || expr.name.name === 'while')) {
 			argCheck(expr.name.name, params.slice(1), args);
+		}
+
+		if(expr.name.name === 'while') {
+			args = expr.args;
 		}
 
 		return jsfn(env, ...args);
@@ -101,7 +105,7 @@ function evalExpr(expr, env) {
 		let [arr, idx] = expr.args.map(k => evalExpr(k, env));
 
 		if(idx.type !== 'number') {
-			throw CaptureError(new TypeError(`Indexes can only be integers!`));
+			throw CaptureError(new TypeError(`Indices can only be integers!`));
 		} 
 		
 		if(idx.value > arr.args.length-1) {

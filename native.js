@@ -21,7 +21,7 @@ function strval(vals, env) {
 
 function nativePRINT(env, ...strs) {
 	let strf = strval(strs, env);
-	shell.innerHTML = strf;
+	shell.innerHTML += strf + '<br/>';
 	console.log(strf);
 	return null;
 }
@@ -32,10 +32,20 @@ function nativeIF(env, truth, fthen, felse) {
 	return evalExpr(expr, env);
 }
 
-function nativeWHILE(env, truth, body) {
-	if(truth.value !== 1) {
-		evalExpr(body, env);
+function nativeWHILE(env, ...args) {
+	let count = 0;
+	while (evalExpr(args[0], env).value === 1 && count < Limit) {
+		interpret(args.slice(1), env);
+		count++;
 	}
+	return null;
+}
+
+function nativeLEN(env, arr) {
+	if(arr.type !== 'array') {
+		throw CaptureError(new TypeError(`Cannot return length of non-array`));
+	}
+	return evalExpr(new Literal(Number, arr.args.length), env);
 }
 
 
