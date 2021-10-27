@@ -1,4 +1,4 @@
-let Limit = 100;
+let Limit = 10000;
 let Bools = ['true', 'false'];
 let Definitions = ['while', 'if', 'len', 'print'];
 let Arithmetics = ['*', '+', '/', '-', '**', '%'];
