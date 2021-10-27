@@ -6,7 +6,7 @@ function run(program) {
 }
 
 let shell = document.getElementById("shell");
-let codeTxt = document.getElementById("code")
+let code = document.getElementById("code")
 let runBtn = document.getElementById("run");
 let clearBtn = document.getElementById("clear");
 
@@ -14,13 +14,14 @@ shell.innerHTML = '';
 
 runBtn.addEventListener('click', function() {
 	run(document.getElementById("code").value);
+  shell.scrollTop = shell.scrollHeight;
 });
 
 clearBtn.addEventListener('click', function(){
   shell.innerHTML = '';
 });
 
-codeTxt.addEventListener('keydown', function(e) {
+code.addEventListener('keydown', function(e) {
   if (e.key == 'Tab') {
     e.preventDefault();
     let start = this.selectionStart;
