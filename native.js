@@ -27,9 +27,8 @@ function nativePRINT(env, ...strs) {
 }
 
 function nativeIF(env, truth, fthen, felse) {
-	let fn = truth.value === 1 ? fthen : felse;
-	let expr = new Expression('call', fn);	
-	return evalExpr(expr, env);
+	let fn = truth.value === 1 ? fthen : felse;	
+	return interpret(fn.body, env);
 }
 
 function nativeWHILE(env, cond, fdo) {
