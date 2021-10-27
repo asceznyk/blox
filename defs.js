@@ -102,6 +102,7 @@ function CaptureError(err) {
 	} 
 	catch(e) {
 		shell.innerHTML += '<div class="line error">' + e.message + '</div>';
+	  shell.scrollTop = shell.scrollHeight;
 		return e.message;
 	}
 }

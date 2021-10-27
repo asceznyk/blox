@@ -2,7 +2,8 @@ function run(program) {
 	program += " ";
 	let tokens = lex(program);
 	tokens.push(new Term('seperator', '\n'));	
-  interpret(parse(tokens), new Env());
+  interpret(parse(tokens), new Env()); 
+  shell.scrollTop = shell.scrollHeight;
 }
 
 let shell = document.getElementById("shell");
@@ -14,7 +15,6 @@ shell.innerHTML = '';
 
 runBtn.addEventListener('click', function() {
 	run(document.getElementById("code").value);
-  shell.scrollTop = shell.scrollHeight;
 });
 
 clearBtn.addEventListener('click', function(){
