@@ -101,7 +101,7 @@ function CaptureError(err) {
 		throw err;
 	} 
 	catch(e) {
-		shell.innerHTML = e.message;
+		shell.innerHTML += '<div class="line error">' + e.message + '</div>';
 		return e.message;
 	}
 }

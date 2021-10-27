@@ -1,6 +1,6 @@
 function argCheck(fname, params, args) {
 	if(params.length !== args.length) {
-		throw CaptureError(new ReferenceError(`${args.length} arguments passed ${fname} requries ${params.length} arguments`));
+		throw CaptureError(new ReferenceError(`${args.length} arguments passed < ${fname} > requries ${params.length} arguments`));
 	}
 }
 

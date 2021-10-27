@@ -11,6 +11,7 @@ function tokenize(program) {
 	let token;
 	
 	if(match = /^[A-Za-z]+/.exec(program)) {
+		match = /^[A-za-z0-9]+/.exec(program)
 		token = match[0];	
 		if(Bools.includes(token)) {
 			token = new Literal(Boolean, token);

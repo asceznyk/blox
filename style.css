@@ -10,6 +10,13 @@ body {
 	margin:0;
 }
 
+textarea,
+pre {
+	-moz-tab-size : 2;
+	-o-tab-size : 2;
+	tab-size : 2;
+}
+
 .wrapper { 
 	width:90%;
 	margin:auto;
@@ -21,11 +28,11 @@ body {
 	color: #E356A7;
 }
 
-.code::-webkit-scrollbar, .console-area::-webkit-scrollbar {
+.code::-webkit-scrollbar, .shell::-webkit-scrollbar {
 	display:none;
 }
 
-.console-area, .code {
+.shell, .code {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
@@ -35,37 +42,51 @@ body {
 	margin: auto;
 	height: 500px;
 	display: block;
-	border: 1px solid #bd93f9;
+	border: 1px solid #BD93F9;
 	float:left;
-	overflow:hidden;
 	font-size: 12px;
 }
 
 .console-area {
 	background:#282A36;
-	color: #50FA7B;
+}
+
+.shell {
+	height: calc(100% - 28px);
+	overflow:scroll;
+}
+
+.line {
+	padding:5px 8px;
+	margin-bottom:2px; 
+	color: #FFF;
+	border-bottom:1px solid;
+}
+
+.line.error {
+	color: #FF0000;
 }
 
 .code-area {
 	border-right:none;
-}
-
-.console-area .shell {
-	padding: 8px;
-}
-
-.code-area .code {
 	background:#282A36;
-	color: #50FA7B;
+}
+
+.code {
+	background: none;
 	padding:8px;
 	outline:none;
 	width:-webkit-fill-available;
 	resize:none;
 	border:none;
-	height: calc(100% - 46px);
+	height:calc(100% - 46px);
 }
 
-.code-area .run {
+.code-area .code {
+	color: #50FA7B;
+}
+
+.run, .clear {
 	background:#50FA7B;
 	border:none;
 	height: 28px;
@@ -93,7 +114,7 @@ body {
 	}
 
 	.code-area {
-		border-right: 1px solid #bd93f9;
+		border-right: 1px solid #BD93F9;
 		border-bottom: none;
 	}
 
@@ -101,6 +122,9 @@ body {
 		display: block;
 	}
 }
+
+
+
 
 
 

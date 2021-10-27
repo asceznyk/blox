@@ -1,12 +1,16 @@
 function strval(vals, env) {
 	let fullstr = '';
 	for(let val of vals) {
-		if(val.type === 'function') {
-			fullstr += '||function||';
+		if (val === null) {
+			fullstr += '(null)';
+		} else if(val.type === 'function') {
+			fullstr += '(function)';
 		} else if (val.type === 'native') {
-			fullstr += '||native||';
-		} else if (val.type === 'number' || val.type === 'string') {
+			fullstr += '(native)';
+		} else if (val.type === 'number') {
 			fullstr += val.value;
+		} else if (val.type === 'string') {
+			fullstr += val.value.replace(/\"/g, '');
 		} else if (val.type === 'identifier') {
 			fullstr += evalExpr(val, env);
 		} else if (val.type === 'array') {
@@ -20,9 +24,12 @@ function strval(vals, env) {
 }
 
 function nativePRINT(env, ...strs) {
-	let strf = strval(strs, env);
-	shell.innerHTML += strf + '<br/>';
-	console.log(strf);
+	let fstr = strval(strs, env);
+	shell.innerHTML += ' \
+	<div class="line"> \
+	' + fstr + 
+	'</div>';
+	console.log(fstr);
 	return null;
 }
 
@@ -46,6 +53,4 @@ function nativeLEN(env, arr) {
 	}
 	return evalExpr(new Literal(Number, arr.args.length), env);
 }
-
-
 
