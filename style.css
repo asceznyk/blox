@@ -10,8 +10,7 @@ body {
 	margin:0;
 }
 
-textarea,
-pre {
+textarea {
 	-moz-tab-size : 2;
 	-o-tab-size : 2;
 	tab-size : 2;
@@ -44,7 +43,7 @@ pre {
 	display: block;
 	border: 1px solid #BD93F9;
 	float:left;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .console-area {
@@ -67,6 +66,11 @@ pre {
 	color: #FF0000;
 }
 
+.raw {
+	opacity:0;
+	top:0px;
+}
+
 .code-area {
 	border-right:none;
 	background:#282A36;
@@ -80,10 +84,11 @@ pre {
 	resize:none;
 	border:none;
 	height:calc(100% - 46px);
+	color:#fff;
 }
 
-.code-area .code {
-	color: #50FA7B;
+.code span {
+	white-space: pre;
 }
 
 .run, .clear {

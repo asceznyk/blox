@@ -1,9 +1,10 @@
 function skipSpaceComments(string) {
   string = string.replace((/\#([\s\S]|[\r\n]).+?(?=\#)\#/gsi), '');
   string = string.replace((/\`([\s\S]|[\r\n]).+?(?=\`)\`/gsi), '');
-  let first = string.search(/[\S\n]/);
-	if (first == -1) return "";
-	return string.slice(first);
+	let first = string.search((/[\S\n]/));
+	if(first == -1) 
+		return '';
+  return string.slice(first);
 }
 
 function tokenize(program) {
@@ -18,7 +19,7 @@ function tokenize(program) {
 		} else if (token === 'null') {
 			token = new Term('null', token);
 		} else {
-			token = new Term('identifier', token);	
+			token = new Term('identifier', token);
 		}
 	} else if (match = /^(["'])(?:(?=(\\?))\2.)*?\1/.exec(program)) {
 		token = new Literal(String, match[0]);
@@ -33,9 +34,6 @@ function tokenize(program) {
 		} 
 	} else if (match = /^[\{\}\(\)\[\]\;\:\,\.\n\r]/.exec(program)) {
 		token = new Term('seperator', match[0]);
-	} else {
-		token = {}
-		match = [' '];
 	}
 
 	return [token, program.slice(match[0].length)];

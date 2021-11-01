@@ -79,7 +79,7 @@ Parser.prototype.expr = function(prev, stops) {
 		} else if (curr.name === '.') {
 			expr = new Expression('index', null, [prev, this.expr(null, stops)]);	
 		} else {
-			throw CaptureError(new SyntaxError(`Unexpected token: ${curr.name}`));
+			throw CaptureError(new SyntaxError(`Unexpected token: ${curr.name} of type ${curr.type}`));
 		}
 
 		return expr;

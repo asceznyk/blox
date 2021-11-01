@@ -5,7 +5,17 @@ let Arithmetics = ['*', '+', '/', '-', '**', '%'];
 let Increments = ['++', '--'];
 let Assignments = ['-=', '+=', '*=', '/=', '**=', '%='];
 let Comparisions = ['==', '<', '>', '<=', '>=', '!='];
-let Operators = [].concat.apply([], [Arithmetics, Comparisions, Increments, Assignments]); 
+let Operators = [].concat.apply([], [Arithmetics, Comparisions, Increments, Assignments]);
+
+let Colors = {
+	'operator': '#E356A7',
+	'seperator':'#42E66C',
+	'identifier':'#FFFFFF',
+	'null':'#BD93F9',
+	'number':'#BD93F9',
+	'string':'#FF5555',
+	'boolean':'#BD93F9'
+}
 
 let Literal = function(ftype, x) {
 	this.value = ftype ==  Boolean ? JSON.parse(x) : ftype(x);
@@ -33,7 +43,7 @@ Stream.prototype.fill = function () {
 	this.next = this.tokens[this.index++];
 	if(this.next === undefined) {
 		this.next = null;
-	}
+	} 
 }
 
 Stream.prototype.peek = function () {
@@ -106,5 +116,4 @@ function CaptureError(err) {
 		return e.message;
 	}
 }
-
 
