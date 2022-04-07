@@ -1,21 +1,8 @@
-function run(program) {
-	program += " ";
-	let tokens = lex(program);
+function run() {
+	let tokens = lex(code.value + ' ');
 	tokens.push(new Term('seperator', '\n'));	
   interpret(parse(tokens), new Env()); 
   shell.scrollTop = shell.scrollHeight;
-}
-
-function setEndOfContenteditable(contentEditableElement) {
-  let range,selection;
-  if(document.createRange) {
-    range = document.createRange();
-    range.selectNodeContents(contentEditableElement);
-    range.collapse(false);
-    selection = window.getSelection();
-    selection.removeAllRanges();    
-    selection.addRange(range);
-  } 
 }
 
 let shell = document.getElementById("shell");
@@ -26,7 +13,7 @@ let clearBtn = document.getElementById("clear");
 shell.innerHTML = '';
 
 runBtn.addEventListener('click', function() {
-	run(code.value);
+	run();
 });
 
 clearBtn.addEventListener('click', function(){
@@ -34,18 +21,16 @@ clearBtn.addEventListener('click', function(){
 });
 
 code.addEventListener('keydown', function(e) {
-  if (e.keyCode == 9) {
+  if (e.key == 'Tab') {
     e.preventDefault();
-
     let start = this.selectionStart;
     let end = this.selectionEnd;
 
     this.value = this.value.substring(0, start) +
       "\t" + this.value.substring(end);
 
-    this.selectionStart =
-      this.selectionEnd = start + 1;
-  } 
+    this.selectionStart = this.selectionEnd = start + 1;
+  }
 });
 
 

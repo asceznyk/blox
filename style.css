@@ -57,9 +57,8 @@ textarea {
 
 .line {
 	padding:5px 8px;
-	margin-bottom:2px; 
+	margin-bottom:0px; 
 	color: #FFF;
-	border-bottom:1px solid;
 }
 
 .line.error {
